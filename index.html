@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Teaching Writing in the AI Era — Rise‑Style Interaction</title>
+<style>
+  :root {
+    --bg: #f3f4f6;          /* gray-100 */
+    --panel: #ffffff;       /* white */
+    --muted: #4b5563;       /* gray-600 */
+    --text: #111827;        /* gray-900 */
+    --accent: #0ea5e9;      /* sky-500 */
+    --accent-2: #6366f1;    /* indigo-500 */
+    --callout: #f8fafc;     /* slate-50 */
+    --border: #e5e7eb;      /* gray-200 */
+  }
+  html, body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; line-height: 1.6; }
+  .wrapper { max-width: 1000px; margin: 0 auto; padding: 0 18px 80px; }
+  h1, h2 { line-height: 1.2; }
+  h1 { font-size: 2rem; margin: 0 0 1rem; letter-spacing: .2px; }
+  h2 { font-size: 1.4rem; margin: 2rem 0 1rem; color: #0f172a; }
+  h3 { font-size: 1.05rem; margin: 1rem 0 .5rem; color: #0f172a; }
+  p { margin: .6rem 0; }
+  .lead { color: #1f2937; font-size: 1.05rem; }
+
+  /* Cover */
+  .cover { position: relative; display: grid; place-items: center; min-height: 52vh; padding: 56px 18px 40px; background: linear-gradient(180deg, #ffffff 0%, #f9fafb 60%, #f3f4f6 100%); border-bottom: 1px solid var(--border); }
+  .cover-inner { max-width: 920px; text-align: center; }
+  .cover h1 { font-size: 2.4rem; margin-bottom: .4rem; }
+  .cover p { color: var(--muted); margin: 0 auto; max-width: 800px; }
+  .scroll-cue { margin-top: 22px; font-size: .9rem; color: var(--muted); }
+
+  /* Panels */
+  section { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px 18px; box-shadow: 0 10px 24px rgba(0,0,0,.04); }
+  section + section { margin-top: 18px; }
+
+  /* Callouts */
+  .callout { border-left: 4px solid var(--accent); background: var(--callout); padding: 12px 14px; border-radius: 10px; margin: 12px 0; }
+  .callout strong { color: var(--accent); }
+
+  /* Accordions using <details> */
+  details { border: 1px solid var(--border); border-radius: 12px; background: #ffffff; padding: 14px 16px; margin: 10px 0; }
+  summary { cursor: pointer; font-weight: 600; color: #111827; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  details[open] { background: #f9fafb; }
+  details > div { margin-top: 10px; color: #111827; }
+
+  /* Tabs */
+  .tabs { margin: 10px 0 4px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: #ffffff; }
+  .tab-controls { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; border-bottom: 1px solid var(--border); background: #f9fafb; }
+  .tab-controls label { padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; font-size: .9rem; cursor: pointer; color: #111827; background: #ffffff; }
+  .tab-controls label:hover { border-color: var(--accent); color: var(--accent); }
+  .tab-content { padding: 14px 16px; }
+  .tab-panel { display: none; }
+  input[type="radio"][name="tabs"] { display: none; }
+  /* Active states (controlled below by IDs) */
+  #t1:checked ~ .tabs .tab-panel.panel-1,
+  #t2:checked ~ .tabs .tab-panel.panel-2,
+  #t3:checked ~ .tabs .tab-panel.panel-3,
+  #t4:checked ~ .tabs .tab-panel.panel-4 { display: block; }
+  
+  #t1:checked ~ .tabs label[for="t1"],
+  #t2:checked ~ .tabs label[for="t2"],
+  #t3:checked ~ .tabs label[for="t3"],
+  #t4:checked ~ .tabs label[for="t4"] {
+    color: #ffffff; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-color: transparent;
+  }
+
+  /* Flashcards */
+  .flashcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 10px; }
+  .card { perspective: 1000px; }
+  .card-inner { position: relative; width: 100%; min-height: 140px; transform-style: preserve-3d; transition: transform .6s; cursor: pointer; }
+  .card:hover .card-inner { transform: rotateY(180deg); }
+  .card-face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; border: 1px solid var(--border); border-radius: 14px; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.01); }
+  .front { background: #ffffff; }
+  .back { background: #f9fafb; transform: rotateY(180deg); }
+
+  /* Lists */
+  ul { padding-left: 1.15rem; }
+  li { margin: .3rem 0; }
+
+  .muted { color: var(--muted); font-size: .95rem; }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  /* Media object for intro image+text */
+  .media { display: flex; gap: 16px; align-items: flex-start; }
+  .media img { width: 220px; max-width: 40%; height: auto; border-radius: 12px; border: 1px solid var(--border); }
+  .media > div { flex: 1; }
+  @media (max-width: 720px) { .media { flex-direction: column; } .media img { max-width: 100%; } }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="cover">
+      <div class="cover-inner">
+        <h1>Teaching Writing in the AI Era</h1>
+        <p>Reframe writing as cognitive demonstration—make thinking visible with process, reflection, and authentic contexts.</p>
+        <div class="scroll-cue">Scroll to begin ↓</div>
+      </div>
+    </header>
+
+    <!-- INTRODUCTION -->
+    <section>
+      <h2>Introduction</h2>
+      <p class="lead">After the launch of ChatGPT in 2022, students almost immediately realized that they could use it to write their essays. The early academic reflex was something like, “How do we stop people from using this?”—a reaction rooted in the same instinct that guards against plagiarism or shortcuts to learning. But it soon became clear that this was not a passing trend or a single tool to ban; it was a fundamental change in how writing itself could be produced.</p>
+      <div class="media">
+        <img alt="Students and faculty collaborating while reviewing AI‑assisted drafts" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='440' height='300'><rect width='100%' height='100%' fill='%23ffffff'/><rect x='12' y='12' width='416' height='276' rx='12' ry='12' fill='%23f3f4f6' stroke='%23e5e7eb'/><path d='M40 100 h360' stroke='%23e5e7eb'/><path d='M40 150 h360' stroke='%23e5e7eb'/><path d='M40 200 h260' stroke='%23e5e7eb'/><circle cx='90' cy='60' r='30' fill='%23dbeafe'/><rect x='140' y='40' width='240' height='40' fill='%23eef2ff'/></svg>" />
+        <div>
+          <p>Faculty began to realize that the question was not how to prevent AI use, but how to teach writing in a world where AI is a legitimate collaborator. What followed was a shift in mindset: from control to adaptation, from suspicion to design. The challenge now is to ensure that writing assignments still cultivate the intellectual habits we value: critical thinking, synthesis, reflection, and authentic authorship, even when a machine can generate the words.</p>
+        </div>
+      </div>
+    </section>
+    </section>
+
+    <!-- FRAMING THE CHALLENGE -->
+    <section>
+      <h2>Framing the Challenge: Why This Matters</h2>
+      <div class="callout">
+        <p><strong>Scenario:</strong> Imagine a student submitting a flawless essay—coherent, properly formatted, and stylistically polished—only to admit that every word was generated by AI. In that moment, the traditional markers of success—grammar, structure, even argument quality—lose their diagnostic value. The instructor is left with a deeper question: What was the student supposed to learn by writing this piece?</p>
+      </div>
+      <p>This scenario captures the pedagogical crossroads we face. Writing is no longer a simple measure of literacy or effort; it is an exercise in intellectual design. The goal is no longer just to produce text, but to demonstrate the thinking, choices, and meaning-making that occur through writing.</p>
+
+      <details>
+        <summary>The Shift in Focus</summary>
+        <div>
+          <p><strong>From Product to Process:</strong> Writing used to be assessed primarily on the final submission. With AI capable of producing competent prose, the value now lies in documenting how the writing emerged—planning, organizing, revising, and reasoning.</p>
+          <p><strong>From Words to Thinking:</strong> Writing must now serve as a visible trace of cognition. The challenge for instructors is to design activities that reveal analysis, synthesis, and judgment rather than just polished sentences.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>The Demonstration Problem</summary>
+        <div>
+          <p><strong>AI Text as a Mirror:</strong> When AI can instantly generate an “A‑level” draft, it exposes which aspects of our writing assignments actually test learning—and which only test compliance. Showing a short example of AI‑generated text underscores that surface‑level competence is now effortless.</p>
+          <p><strong>The Rhetorical Question:</strong> If AI can complete the task perfectly, was the task measuring understanding or just the ability to follow form? This moment invites faculty to interrogate their assumptions about what writing proves.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>The Pedagogical Response</summary>
+        <div>
+          <p><strong>Clarifying Purpose:</strong> AI doesn’t make writing obsolete—it makes its purpose explicit.</p>
+          <ul>
+            <li>Developing argumentation and logic</li>
+            <li>Integrating and evaluating sources</li>
+            <li>Communicating discipline‑specific ways of thinking</li>
+            <li>Expressing a scholarly or professional identity</li>
+          </ul>
+          <p><strong>Design Opportunity:</strong> This shift reframes writing as an intentional, evidence‑based process rather than a finished product. Instructional design becomes the bridge: building activities that elicit thought, reflection, and authorship in ways AI cannot replicate.</p>
+          <div class="callout"><p><strong>Key Message:</strong> AI doesn’t eliminate writing—it clarifies why we teach it. The challenge is not to defend writing from technology, but to reimagine it as the clearest window into how students think.</p></div>
+        </div>
+      </details>
+    </section>
+
+    <!-- TEACHING WRITING IN THE AI ERA (TABS) -->
+    <section>
+      <h2>Teaching Writing in the AI Era</h2>
+      <p class="muted">Purpose: Translate the rethinking of writing into actionable teaching strategies that preserve the development of writers, not just writing.</p>
+
+      <!-- Hidden radios to control tabs -->
+      <input type="radio" name="tabs" id="t1" checked>
+      <input type="radio" name="tabs" id="t2">
+      <input type="radio" name="tabs" id="t3">
+      <input type="radio" name="tabs" id="t4">
+
+      <div class="tabs">
+        <div class="tab-controls">
+          <label for="t1">1) Process over Product</label>
+          <label for="t2">2) Sources & Integration</label>
+          <label for="t3">3) Rhetoric & Reading</label>
+          <label for="t4">4) Authorship & Ethics</label>
+        </div>
+        <div class="tab-content">
+          <div class="tab-panel panel-1">
+            <h3>Teach the Writing Process, Not Just the Product</h3>
+            <p>Writing must be reframed as a visible record of thought, not a deliverable to be polished by algorithms. AI can assemble words, but it cannot demonstrate the thinking behind those words.</p>
+            <div class="callout"><p><strong>Why it matters:</strong> Students often equate “good writing” with “well‑written text.” In the AI era, that distinction collapses—AI can produce fluent but thoughtless prose. Focusing on process foregrounds the cognitive work: generating ideas, organizing logic, and refining argumentation.</p></div>
+            <ul>
+              <li><strong>Integrate AI intentionally:</strong> AI‑generated first draft → reflective revision that demonstrates voice, evidence use, and critical improvement.</li>
+              <li><strong>Evaluate transformation, not polish:</strong> Grade the quality of revision—clarity, depth, coherence.</li>
+              <li><strong>Build visible steps:</strong> Proposal → outline → AI‑assisted draft → reflective revision memo.</li>
+              <li><strong>Teach revision as inquiry:</strong> Have students justify decisions that improved their argument.</li>
+            </ul>
+          </div>
+
+          <div class="tab-panel panel-2">
+            <h3>Teach Source Evaluation and Integration</h3>
+            <p>AI can mimic authority but not verify it. Information literacy—the ability to judge credibility and synthesize sources—moves to the center of writing instruction.</p>
+            <div class="callout"><p><strong>Why it matters:</strong> AI tools generate plausible but sometimes inaccurate or fabricated information. Writing becomes a space to discern truth from fluency and engage ethically with evidence.</p></div>
+            <ul>
+              <li><strong>Source comparison:</strong> Cross‑check AI content against scholarly databases and flag omissions or errors.</li>
+              <li><strong>Bias awareness:</strong> Analyze how AI frames a topic—whose voices are missing?</li>
+              <li><strong>Integration tasks:</strong> Blend AI summaries with peer‑reviewed sources, explicitly noting provenance.</li>
+              <li><strong>Reflective curation:</strong> Prompts like “Which sources did you trust, and why?”</li>
+            </ul>
+          </div>
+
+          <div class="tab-panel panel-3">
+            <h3>Teach Critical Reading and Rhetorical Awareness</h3>
+            <p>AI output is ideal for learning rhetoric: it mimics argumentation without genuine understanding and thus invites critique.</p>
+            <div class="callout"><p><strong>Why it matters:</strong> Students learn writing by analyzing what makes writing work—audience, purpose, and genre conventions.</p></div>
+            <ul>
+              <li><strong>AI as text for critique:</strong> Diagnose rhetorical/ethical failures.</li>
+              <li><strong>Genre comparison:</strong> Contrast an AI lab report vs. editorial.</li>
+              <li><strong>Revision challenges:</strong> Coach the AI; observe how genre awareness shapes choices.</li>
+              <li><strong>Assessment focus:</strong> Credit rhetorical insight—gaps in logic, tone, or audience engagement.</li>
+            </ul>
+          </div>
+
+          <div class="tab-panel panel-4">
+            <h3>Teach Authorship and Ethical Use</h3>
+            <p>In a world where text can be generated instantly, authorship becomes a moral and intellectual act.</p>
+            <div class="callout"><p><strong>Why it matters:</strong> Tool‑use integrity and transparency are part of being an educated writer.</p></div>
+            <ul>
+              <li><strong>AI transparency statements:</strong> Students describe how AI was used (brainstorming, editing, drafting).</li>
+              <li><strong>Ethical discussions:</strong> Distinguish support from substitution—coauthor vs. plagiarism.</li>
+              <li><strong>Reflective authorship:</strong> Articulate what contributions are uniquely theirs.</li>
+              <li><strong>Assessment lens:</strong> Reward honesty and discernment over surface perfection.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESIGNING ASSIGNMENTS -->
+    <section>
+      <h2>Designing Assignments that Develop Writers (15:00–25:00)</h2>
+      <p class="muted">Purpose: Demonstrate how to design writing activities that develop writing skills—critical thinking, synthesis, and reflection—rather than simply produce written products.</p>
+
+      <details>
+        <summary>1) Scaffold the Process</summary>
+        <div>
+          <div class="callout"><p><strong>Why it matters:</strong> Scaffolding shifts focus from final performance to cognitive growth and helps students see revision as learning.</p></div>
+          <ul>
+            <li><strong>Stage the assignment:</strong> Proposal → outline → draft → peer feedback → reflection → revision.</li>
+            <li><strong>Assess in parts:</strong> Grade each step for process quality.</li>
+            <li><strong>Encourage evolution:</strong> Short rationales explaining changes between drafts.</li>
+            <li><strong>Leverage technology:</strong> Allow low‑stakes AI brainstorming; capture reflection on what was learned.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>2) Center Reflection</summary>
+        <div>
+          <div class="callout"><p><strong>Why it matters:</strong> Reflection builds metacognition and reveals growth even when AI assists.</p></div>
+          <ul>
+            <li><strong>End‑of‑assignment prompts:</strong> “What did you learn through revision?”, “How did AI challenge your ideas?”, “Which part was most authentically yours?”</li>
+            <li><strong>Reflective criteria:</strong> Include <em>insight into process</em> in rubrics.</li>
+            <li><strong>Scaffold reflection:</strong> Short reflections after each draft culminating in a synthesis.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>3) Use Comparative Assignments</summary>
+        <div>
+          <div class="callout"><p><strong>Why it matters:</strong> Comparison highlights human strengths—reasoning, emphasis, nuance—and turns AI into a learning partner.</p></div>
+          <ul>
+            <li><strong>AI vs. Human Drafts:</strong> Generate both; critique argumentation and evidence.</li>
+            <li><strong>Revision Challenges:</strong> Edit AI drafts to be persuasive, coherent, accurate.</li>
+            <li><strong>Voice Comparison:</strong> Identify tone/insight differences and why they matter.</li>
+            <li><strong>Assessment focus:</strong> Grade analytical insight.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>4) Design Realistic & Contextual Tasks</summary>
+        <div>
+          <div class="callout"><p><strong>Why it matters:</strong> Situational judgment and local knowledge resist automation and align with professional practice.</p></div>
+          <ul>
+            <li><strong>Applied prompts:</strong> Policy memo to your department; patient‑education brochure in plain language.</li>
+            <li><strong>Situate the reader:</strong> Write to local stakeholders, boards, or community groups.</li>
+            <li><strong>Personal insight:</strong> Connect topics to field experience or discipline practice.</li>
+            <li><strong>Authentic evaluation:</strong> Emphasize clarity, context awareness, audience adaptation.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>5) Reimagine Feedback</summary>
+        <div>
+          <div class="callout"><p><strong>Why it matters:</strong> Let AI handle surface‑level feedback so instructors can focus on argumentation, synthesis, and originality.</p></div>
+          <ul>
+            <li><strong>Tiered feedback:</strong> AI → structure & clarity; Instructor → higher‑order thinking.</li>
+            <li><strong>Teach feedback interpretation:</strong> Prompt: “How did you apply feedback to strengthen your argument?”</li>
+            <li><strong>Peer feedback design:</strong> Train focused, evidence‑based critique.</li>
+            <li><strong>Feedback logs:</strong> Track revisions linked to comments.</li>
+          </ul>
+          <div class="divider"></div>
+          <p class="muted"><strong>Design Lens:</strong> Make thinking visible. Evaluate <em>how</em> students write, not just <em>what</em> they write.</p>
+        </div>
+      </details>
+
+      <div class="flashcards" aria-label="Key Principles Flashcards">
+        <div class="card" title="Hover to flip">
+          <div class="card-inner">
+            <div class="card-face front"><strong>Principle</strong><br/>Transparency of Thinking</div>
+            <div class="card-face back">Use process artifacts—outlines, memos, and revision notes—to evidence cognition.</div>
+          </div>
+        </div>
+        <div class="card" title="Hover to flip">
+          <div class="card-inner">
+            <div class="card-face front"><strong>Principle</strong><br/>Reflection as Data</div>
+            <div class="card-face back">Grade metacognition—how students explain choices, changes, and learning.</div>
+          </div>
+        </div>
+        <div class="card" title="Hover to flip">
+          <div class="card-inner">
+            <div class="card-face front"><strong>Principle</strong><br/>Authentic Contexts</div>
+            <div class="card-face back">Design tasks tied to real audiences, constraints, and professional stakes.</div>
+          </div>
+        </div>
+        <div class="card" title="Hover to flip">
+          <div class="card-inner">
+            <div class="card-face front"><strong>Principle</strong><br/>Feedback for Growth</div>
+            <div class="card-face back">Shift feedback from correctness to cognition and implementation.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE SPARK -->
+    <section>
+      <h2>The Spark</h2>
+      <p class="muted">Purpose: End with inspiration and clarity—showing that AI challenges us not to abandon writing instruction, but to teach its essence more intentionally.</p>
+      <p>AI’s entrance into the classroom has forced a collective pause—a moment to ask what writing really accomplishes in education. With tools capable of producing grammatically perfect and even persuasive text in seconds, the surface features of writing are no longer reliable indicators of learning. Yet this disruption doesn’t diminish the value of teaching writing; it reveals it. Writing is not an end product but an intellectual performance—where reasoning, creativity, and voice converge.</p>
+
+      <details>
+        <summary>Reframing the Narrative</summary>
+        <div>
+          <p>The goal is not to outsmart AI, but to outdesign it. Replace restriction‑first policies with transparency policies and encourage ethical experimentation.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Center Human Strengths</summary>
+        <div>
+          <ul>
+            <li><strong>Cognitive:</strong> Articulate the <em>why</em> behind rhetorical and structural choices.</li>
+            <li><strong>Ethical:</strong> Treat writing as responsibility—stand behind ideas and evidence.</li>
+            <li><strong>Personal:</strong> Emphasize identity and stance; ask, “What perspective do you bring that no AI could?”</li>
+            <li><strong>Social:</strong> Write to contribute meaningfully within a community or discipline.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Reclaiming Authorship</summary>
+        <div>
+          <p>When words are easy to generate, ideas become the true measure of originality. Use authorship statements and reflective ownership prompts; assess depth of ownership over phrasing novelty.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Inspiration Through Example</summary>
+        <div>
+          <p><strong>Revised Prompt:</strong> Use an AI tool to generate a model essay on data privacy. Then annotate the essay with marginal notes analyzing its reasoning, identifying omissions, and clarifying what a human writer could add. Conclude with your own response reflecting your stance.</p>
+          <p><em>Impact:</em> Students demonstrate analysis, synthesis, and voice while learning genre awareness and the limits of automation.</p>
+        </div>
+      </details>
+
+      <div class="callout"><p><strong>Ending with the Spark:</strong> AI can write, but it cannot reason, reflect, or care. Devote teaching to what cannot be automated—the spark of human thought behind the text.</p></div>
+      <p class="muted"><strong>Instructional Design Lens:</strong> Illuminate why students are writing: to think, to connect, and to claim ownership of ideas. Reimagine writing as cognitive demonstration and let AI handle efficiency while teaching preserves meaning.</p>
+    </section>
+  </div>
+</body>
+</html>
